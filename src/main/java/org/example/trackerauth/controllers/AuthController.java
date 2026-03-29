@@ -24,8 +24,13 @@ public class AuthController {
                 .build();
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        return ResponseEntity.ok(Map.of("sosal", "aasda").toString());
+
+    @PostMapping("/login")
+    public ResponseEntity<Void> login(@Validated @RequestBody AuthUserRequest user) {
+        String token = authService.register(user);
+
+        return ResponseEntity.ok()
+                .header("Authorization", "Bearer " + token)
+                .build();
     }
 }
