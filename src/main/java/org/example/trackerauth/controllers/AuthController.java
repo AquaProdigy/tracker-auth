@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<Void> registerUser(@Validated @RequestBody AuthUserRequest user) {
+    public ResponseEntity<Void> register(@Validated @RequestBody AuthUserRequest user) {
         String token = authService.register(user);
 
         return ResponseEntity.ok()
@@ -27,7 +27,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Void> login(@Validated @RequestBody AuthUserRequest user) {
-        String token = authService.register(user);
+        String token = authService.login(user);
 
         return ResponseEntity.ok()
                 .header("Authorization", "Bearer " + token)
