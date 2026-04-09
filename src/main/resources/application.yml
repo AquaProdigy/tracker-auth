@@ -16,6 +16,17 @@ spring:
       ddl-auto: create
     show-sql: true
 
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 jwt:
   secret: "123456789123456789werwefdsvwdvwwfwe"
   expiration: 86400000
+
+Kafka:
+  topic: "EMAIL_SENDING_TASKS"
+
+internal:
+  api-key: "12345678"

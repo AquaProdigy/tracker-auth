@@ -5,9 +5,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.trackerauth.api.ApiErrorMessages;
 import org.example.trackerauth.dto.AuthUserRequest;
+import org.example.trackerauth.dto.EmailLetterModel;
 import org.example.trackerauth.entities.User;
 import org.example.trackerauth.exceptions.InvalidPasswordException;
 import org.example.trackerauth.repositories.UserRepository;
+import org.example.trackerauth.templates.NewUserEmailTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenService jwtTokenService;
     private final UserRepository userRepository;
+    private final KafkaSenderService kafkaSenderService;
 
     @Transactional
     public String register(AuthUserRequest authUserRequest) {
@@ -26,6 +29,12 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(authUserRequest.getPassword()));
 
         User savedUser = userRepository.save(user);
+
+        kafkaSenderService.sendMessageToKafka(new EmailLetterModel(
+                user.getEmail(),
+                NewUserEmailTemplate.TITLE,
+                NewUserEmailTemplate.DESCRIPTION
+        ));
 
         return jwtTokenService.generateToken(savedUser);
     }
