@@ -2,7 +2,6 @@ package org.example.trackerauth.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.example.trackerauth.dto.UserDto;
-import org.example.trackerauth.entities.User;
 import org.example.trackerauth.mapper.UserMapper;
 import org.example.trackerauth.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,12 +19,15 @@ public class InternalController {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
+    @Value("${internal.name-header}")
+    private String internalNameHeader;
+
     @Value("${internal.api-key}")
     private String internalApiKey;
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
-        return ResponseEntity.ok().header("X-Internal-Api-Key", internalApiKey)
+        return ResponseEntity.ok().header(internalNameHeader, internalApiKey)
                 .body(
                         userRepository.findAll()
                         .stream()

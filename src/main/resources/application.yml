@@ -6,27 +6,27 @@ spring:
     name: "tracker-auth"
 
   datasource:
-    username: admin
-    password: admin
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/task-db
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     show-sql: true
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_HOST}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 jwt:
-  secret: "123456789123456789werwefdsvwdvwwfwe"
-  expiration: 86400000
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}
 
 Kafka:
-  topic: "EMAIL_SENDING_TASKS"
+  topic: ${KAFKA_TOPIC_NAME}
 
 internal:
-  api-key: "12345678"
+  name-header: "X-Internal-Api-Key"
+  api-key: ${INTERNAL_API_KEY}

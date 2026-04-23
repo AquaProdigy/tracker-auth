@@ -1,5 +1,6 @@
 package org.example.trackerauth.advice;
 
+import org.example.trackerauth.exceptions.EmailAlreadyExistsException;
 import org.example.trackerauth.exceptions.InvalidPasswordException;
 import org.example.trackerauth.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidPasswordException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorMessage handleInvalidPasswordException(InvalidPasswordException ex) {
+        return new ErrorMessage(ex.getMessage());
+    }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorMessage handleEmailAlreadyExistsException(EmailAlreadyExistsException ex) {
         return new ErrorMessage(ex.getMessage());
     }
 

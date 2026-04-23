@@ -7,9 +7,11 @@ import org.example.trackerauth.api.ApiErrorMessages;
 import org.example.trackerauth.dto.AuthUserRequest;
 import org.example.trackerauth.dto.EmailLetterModel;
 import org.example.trackerauth.entities.User;
+import org.example.trackerauth.exceptions.EmailAlreadyExistsException;
 import org.example.trackerauth.exceptions.InvalidPasswordException;
 import org.example.trackerauth.repositories.UserRepository;
 import org.example.trackerauth.templates.NewUserEmailTemplate;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,15 +30,20 @@ public class AuthService {
         user.setEmail(authUserRequest.getEmail());
         user.setPassword(passwordEncoder.encode(authUserRequest.getPassword()));
 
-        User savedUser = userRepository.save(user);
+        try {
+            User savedUser = userRepository.save(user);
 
-        kafkaSenderService.sendMessageToKafka(new EmailLetterModel(
-                user.getEmail(),
-                NewUserEmailTemplate.TITLE,
-                NewUserEmailTemplate.DESCRIPTION
-        ));
+            kafkaSenderService.sendMessageToKafka(new EmailLetterModel(
+                    savedUser.getEmail(),
+                    NewUserEmailTemplate.TITLE,
+                    NewUserEmailTemplate.DESCRIPTION
+            ));
 
-        return jwtTokenService.generateToken(savedUser);
+            return jwtTokenService.generateToken(savedUser);
+
+        } catch (DataIntegrityViolationException e) {
+            throw new EmailAlreadyExistsException(ApiErrorMessages.EMAIL_ALREADY_EXISTS.getMessage());
+        }
     }
 
     public String login(AuthUserRequest authUserRequest) {

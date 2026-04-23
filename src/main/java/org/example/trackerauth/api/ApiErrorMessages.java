@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ApiErrorMessages {
     USER_NOT_FOUND("User not found"),
-    INVALID_PASSWORD("Invalid password"),;
+    INVALID_PASSWORD("Invalid password"),
+    EMAIL_ALREADY_EXISTS("Email already exists");
 
     private final String message;
 
