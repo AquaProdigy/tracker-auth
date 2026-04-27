@@ -28,5 +28,4 @@ Kafka:
   topic: ${KAFKA_TOPIC_NAME}
 
 internal:
-  name-header: "X-Internal-Api-Key"
   api-key: ${INTERNAL_API_KEY}
