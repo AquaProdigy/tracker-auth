@@ -24,11 +24,9 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 5, max = 100, message = ApiValidationMessages.SIZE_ERROR)
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Size(min = 5, max = 100, message = ApiValidationMessages.SIZE_ERROR)
     @Column(nullable = false)
     private String password;
 
