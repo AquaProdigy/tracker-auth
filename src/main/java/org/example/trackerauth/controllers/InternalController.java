@@ -2,8 +2,7 @@ package org.example.trackerauth.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.example.trackerauth.dto.UserDto;
-import org.example.trackerauth.mapper.UserMapper;
-import org.example.trackerauth.repositories.UserRepository;
+import org.example.trackerauth.services.InternalService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InternalController {
     private static final String internalNameHeader = "X-Internal-Api-Key";
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    private final InternalService internalService;
 
     @Value("${internal.api-key}")
     private String internalApiKey;
@@ -34,11 +32,6 @@ public class InternalController {
         }
 
         return ResponseEntity.ok().header(internalNameHeader, internalApiKey)
-                .body(
-                        userRepository.findAll()
-                        .stream()
-                        .map(userMapper::toUserDto)
-                        .toList()
-                );
+                .body(internalService.getUsers());
     }
 }
