@@ -1,13 +1,13 @@
-package org.example.trackerauth.services;
+package org.example.trackerauth.service;
 
 
 import lombok.RequiredArgsConstructor;
 import org.example.trackerauth.api.ApiErrorMessages;
 import org.example.trackerauth.dto.UserDto;
-import org.example.trackerauth.entities.User;
-import org.example.trackerauth.exceptions.UserNotFoundException;
+import org.example.trackerauth.entity.User;
+import org.example.trackerauth.exception.UserNotFoundException;
 import org.example.trackerauth.mapper.UserMapper;
-import org.example.trackerauth.repositories.UserRepository;
+import org.example.trackerauth.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 

@@ -1,4 +1,4 @@
-package org.example.trackerauth.dto;
+package org.example.trackerauth.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -15,5 +15,6 @@ public class AuthUserRequest {
     private String email;
 
     @Size(min = 5, max = 100, message = ApiValidationMessages.SIZE_ERROR)
+    @NotBlank(message = ApiValidationMessages.NOT_BLANK)
     private String password;
 }

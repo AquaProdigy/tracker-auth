@@ -1,8 +1,8 @@
 package org.example.trackerauth.advice;
 
-import org.example.trackerauth.exceptions.EmailAlreadyExistsException;
-import org.example.trackerauth.exceptions.InvalidPasswordException;
-import org.example.trackerauth.exceptions.UserNotFoundException;
+import org.example.trackerauth.exception.EmailAlreadyExistsException;
+import org.example.trackerauth.exception.InvalidPasswordException;
+import org.example.trackerauth.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;

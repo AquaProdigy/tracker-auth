@@ -1,4 +1,4 @@
-package org.example.trackerauth.exceptions;
+package org.example.trackerauth.exception;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException(String message) {

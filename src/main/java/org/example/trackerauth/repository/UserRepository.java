@@ -1,6 +1,6 @@
-package org.example.trackerauth.repositories;
+package org.example.trackerauth.repository;
 
-import org.example.trackerauth.entities.User;
+import org.example.trackerauth.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package org.example.trackerauth.exceptions;
+package org.example.trackerauth.exception;
 
 public class EmailAlreadyExistsException extends RuntimeException {
     public EmailAlreadyExistsException(String message) {

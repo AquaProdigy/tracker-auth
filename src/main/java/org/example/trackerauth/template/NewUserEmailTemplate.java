@@ -1,4 +1,4 @@
-package org.example.trackerauth.templates;
+package org.example.trackerauth.template;
 
 
 import lombok.AccessLevel;

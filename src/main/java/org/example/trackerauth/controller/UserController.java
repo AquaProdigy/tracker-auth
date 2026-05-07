@@ -1,8 +1,8 @@
-package org.example.trackerauth.controllers;
+package org.example.trackerauth.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.trackerauth.dto.UserDto;
-import org.example.trackerauth.services.UserService;
+import org.example.trackerauth.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +14,9 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<UserDto> getUser(
-            @RequestHeader(name = "X-User-Id")  String userId
+            @RequestHeader(name = "X-User-Id") Long userId
             ){
-        UserDto user = userService.findUserById(Long.valueOf(userId));
+        UserDto user = userService.findUserById(userId);
         return ResponseEntity.ok(user);
     }
 }

@@ -24,8 +24,9 @@ jwt:
   secret: ${JWT_SECRET}
   expiration: ${JWT_EXPIRATION}
 
-Kafka:
+kafka:
   topic: ${KAFKA_TOPIC_NAME}
 
 internal:
   api-key: ${INTERNAL_API_KEY}
+  name-header: ${INTERNAL_NAME_HEADER}

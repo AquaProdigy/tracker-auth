@@ -1,10 +1,9 @@
-package org.example.trackerauth.services;
+package org.example.trackerauth.config.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
-import org.example.trackerauth.entities.User;
-import org.springframework.beans.factory.annotation.Value;
+import org.example.trackerauth.entity.User;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -14,25 +13,20 @@ import java.util.Date;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenService {
-
-    @Value("${jwt.secret}")
-    private String jwtSecret;
-
-    @Value("${jwt.expiration}")
-    private long jwtExpiration;
+    private final JwtProperties jwtProperties;
 
     public String generateToken(User user) {
         return Jwts.builder()
-                .subject(user.getUsername())
+                .subject(user.getEmail())
                 .claim("userId", user.getId())
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .expiration(new Date(System.currentTimeMillis() + jwtProperties.getExpiration()))
                 .signWith(getSigningKey())
                 .compact();
     }
 
     private SecretKey getSigningKey() {
-        return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8));
     }
 
 }

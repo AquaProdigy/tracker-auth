@@ -1,16 +1,19 @@
-package org.example.trackerauth.services;
+package org.example.trackerauth.service.impl;
 
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.trackerauth.api.ApiErrorMessages;
-import org.example.trackerauth.dto.AuthUserRequest;
+import org.example.trackerauth.config.jwt.JwtTokenService;
+import org.example.trackerauth.dto.request.AuthUserRequest;
 import org.example.trackerauth.dto.EmailLetterModel;
-import org.example.trackerauth.entities.User;
-import org.example.trackerauth.exceptions.EmailAlreadyExistsException;
-import org.example.trackerauth.exceptions.InvalidPasswordException;
-import org.example.trackerauth.repositories.UserRepository;
-import org.example.trackerauth.templates.NewUserEmailTemplate;
+import org.example.trackerauth.entity.User;
+import org.example.trackerauth.exception.EmailAlreadyExistsException;
+import org.example.trackerauth.exception.InvalidPasswordException;
+import org.example.trackerauth.repository.UserRepository;
+import org.example.trackerauth.service.AuthService;
+import org.example.trackerauth.service.KafkaSenderService;
+import org.example.trackerauth.template.NewUserEmailTemplate;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +21,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenService jwtTokenService;
     private final UserRepository userRepository;
