@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({UserNotFoundException.class, UsernameNotFoundException.class})
+    @ExceptionHandler({UserNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorMessage handleUserNotFoundException(UserNotFoundException ex) {
         return new ErrorMessage(ex.getMessage());

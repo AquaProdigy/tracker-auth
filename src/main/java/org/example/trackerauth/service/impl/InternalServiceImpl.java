@@ -1,23 +1,23 @@
 package org.example.trackerauth.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.trackerauth.dto.UserDto;
-import org.example.trackerauth.mapper.UserMapper;
+import org.example.trackerauth.dto.response.InternalUserEmailResponse;
 import org.example.trackerauth.repository.UserRepository;
+import org.example.trackerauth.service.InternalService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class InternalServiceImpl {
+public class InternalServiceImpl implements InternalService {
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
 
-    public List<UserDto> getUsers() {
-        return userRepository.findAll()
+    @Override
+    public List<InternalUserEmailResponse> getEmailByIds(List<Long> ids) {
+        return userRepository.findAllById(ids)
                 .stream()
-                .map(userMapper::toUserDto)
+                .map(u -> new InternalUserEmailResponse(u.getId(), u.getEmail()))
                 .toList();
     }
 }

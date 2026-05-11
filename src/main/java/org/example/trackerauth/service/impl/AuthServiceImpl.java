@@ -10,6 +10,7 @@ import org.example.trackerauth.dto.EmailLetterModel;
 import org.example.trackerauth.entity.User;
 import org.example.trackerauth.exception.EmailAlreadyExistsException;
 import org.example.trackerauth.exception.InvalidPasswordException;
+import org.example.trackerauth.exception.UserNotFoundException;
 import org.example.trackerauth.repository.UserRepository;
 import org.example.trackerauth.service.AuthService;
 import org.example.trackerauth.service.KafkaSenderService;
@@ -51,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
 
     public String login(AuthUserRequest authUserRequest) {
         User user = userRepository.findByEmail(authUserRequest.getEmail()).orElseThrow(() ->
-                new UsernameNotFoundException(ApiErrorMessages.USER_NOT_FOUND.getMessage())
+                new UserNotFoundException(ApiErrorMessages.USER_NOT_FOUND.getMessage())
         );
 
         if (!passwordEncoder.matches(authUserRequest.getPassword(), user.getPassword())) {
