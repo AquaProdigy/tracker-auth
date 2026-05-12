@@ -1,6 +1,0 @@
-package org.example.trackerauth.dto;
-
-public record UserDto(
-        Long id,
-        String email
-) {}

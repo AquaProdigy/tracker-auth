@@ -1,12 +1,10 @@
 package org.example.trackerauth.service.impl;
 
-
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.trackerauth.api.ApiErrorMessages;
 import org.example.trackerauth.config.jwt.JwtTokenService;
 import org.example.trackerauth.dto.request.AuthUserRequest;
-import org.example.trackerauth.dto.EmailLetterModel;
+import org.example.trackerauth.dto.kafka.EmailLetterKafkaDto;
 import org.example.trackerauth.entity.User;
 import org.example.trackerauth.exception.EmailAlreadyExistsException;
 import org.example.trackerauth.exception.InvalidPasswordException;
@@ -18,6 +16,7 @@ import org.example.trackerauth.template.NewUserEmailTemplate;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +35,7 @@ public class AuthServiceImpl implements AuthService {
         try {
             User savedUser = userRepository.save(user);
 
-            kafkaSenderService.sendMessageToKafka(new EmailLetterModel(
+            kafkaSenderService.sendMessageToKafka(new EmailLetterKafkaDto(
                     savedUser.getEmail(),
                     NewUserEmailTemplate.TITLE,
                     NewUserEmailTemplate.DESCRIPTION

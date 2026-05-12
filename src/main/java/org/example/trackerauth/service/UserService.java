@@ -1,7 +1,7 @@
 package org.example.trackerauth.service;
 
-import org.example.trackerauth.dto.UserDto;
+import org.example.trackerauth.dto.response.UserResponse;
 
 public interface UserService {
-    UserDto findUserById(Long userId);
+    UserResponse findUserById(Long userId);
 }
