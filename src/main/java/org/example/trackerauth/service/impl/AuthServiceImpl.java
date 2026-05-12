@@ -16,7 +16,6 @@ import org.example.trackerauth.service.AuthService;
 import org.example.trackerauth.service.KafkaSenderService;
 import org.example.trackerauth.template.NewUserEmailTemplate;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
